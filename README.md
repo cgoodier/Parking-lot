@@ -191,63 +191,130 @@ _A complementar_
 
 ###__The Web page__
 [Check out our Web page!](http://10.43.51.167:5000/ "Parkify Web")
-A web page for the application was made so that those who are interested in how their parking lot is being used can see it on a visual represantion of a map. It was made utilizing the front-end framework materilize to give a better user experience. It is divided into four sections: Home, View, About Us, and Documentation.
 
-On the home page the user is prompted to upload their parking lot through a .csv file containing their initial values for how the zones are filled at the moment; reading each row in the document and identyfiyng the zone and the number of occupied and free spots in each of them. This is done with the following code in [loader.py](https://github.com/iotchallenge2016/development_card/blob/web-service/loader.py "GitHub Repository"):
+A web page for the application was made so that those who are interested in how their parking lot is being used can see it on a visual represantion of a map. It was made utilizing the front-end framework materilize to give the user a better experience. It is divided in four sections: Home, View, About Us, and Documentation.
+
+On the home page the user is prompted to upload their parking lot through a .csv file containing their initial values for how each of the parking zones are filled at the moment, reading each row in the document and identyfiyng the zone and the number of occupied and free spots in each of them. This is done with the following code in [loader.py](https://github.com/iotchallenge2016/development_card/blob/web-service/loader.py "GitHub Repository"):
 
 ```python
+def parse_csv(csvURL):
+    avlb = 2
+    zone = 0
+    values = []
+    total = 0
+    diff = ""
+    json = "["
     with open(csvURL, 'r') as csv:
         for line in csv.readlines():
             elements = line.strip().split(',')
-            if diff != int(elements[zone]):
+            if diff == "":
+                diff = (elements[zone])
+            elif diff != elements[zone]:
                 ocpd = sum(values)
                 free = total - ocpd
                 json = json + toJSON(diff,free, total)
                 values = []
                 total = 0
-                diff = int(elements[zone])
+                diff = elements[zone]
             values.append(int(elements[avlb]))
             total += 1
-            
     ocpd = sum(values)
     free = total - ocpd
     return json + toJSONfinal(diff,free, total) + "]"
+
+def toJSON(zone,available,total):
+    return "{\"section\":\""+zone+"\", \"capacity\":"+str(available)+",\"max\":"+str(total)+"},"
+
+def toJSONfinal(zone,available,total):
+    return "{\"section\":\""+zone+"\", \"capacity\":"+str(available)+",\"max\":"+str(total)+"}"
 ```
 
-The page _View_ is where the user is able to see in a map how the different zones are filled, represented with different colors, starting from dark red (full lot) and continuing into lighter tones of blue (empty lot). Not only os the representation made on the map, but also on cards beside it that will also be filled with this colors as well as giving the number of free place and percentage of how occupied the parking lot is and it updates every 5 seconds. This can be found in [loadCards.js](https://github.com/iotchallenge2016/development_card/blob/web-service/static/js/loadCards.js "GitHub Repository").
+In the page _View_, a map is initialized utilizing Google Maps where the user is able to see how the different zones of the parking lot are filled; different colors are used according to how many spaces are occupied in a zone, starting from dark red (full lot) and continuing into lighter tones of blue (empty lot). Besides the map, we can find cards, or blocks, that share the same colors as the different areas of the map and give the number of free place and percentage of how many spots occupied in the parking lot with updates every 5 seconds. Both of this things can be found in  [main.js](https://github.com/iotchallenge2016/development_card/blob/web-service/static/js/main.js "GitHub Repository").
 
 ```javascript
-var html = "";
-		for (var i = data.length - 1; i >= 0; i--) {
-			html += "<div class='col s12'>";
-			var percentage = Math.round((data[i].max - data[i].capacity) / data[i].max * 100)
-			var color = "blue-grey lighten-1";
-			if (percentage > 90) {
-				color = "red darken-4"
-			} else if(percentage > 85) {
-				color = "red darken-2"
-			} else if(percentage > 70) {
-				color = "red"
-			} else if(percentage > 60) {
-				color = "red lighten-1"
-			} else if(percentage > 50) {
-				color = "purple darken-1"
-			} else if(percentage > 40) {
-				color = "blue-grey darken-1"
-			}
-			html += "<div class='card "+ color +"'>";
-			html += "<div class='card-content white-text'>";
-			html += "<div class='card-title'>" + data[i].section.replace("P_", "Estacionamiento ") + "</div>";
-			html += "<p>Lugares Disponibles: " + (data[i].max - (data[i].max - data[i].capacity)).toString() + "</p>";
-			html += "<p>Ocupación: " + percentage + "%</p>"
-			html += "</div>"
-			html += "</div>"
-			html += "</div>";
+var polygons = [];
+
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 17,
+    center: {lat: 20.734485, lng: -103.454752},
+    mapTypeId: google.maps.MapTypeId.TERRAIN,
+    scrollwheel: true,
+    draggable: true
+  });
+
+  var zones = [];
+  var percentages = [];
+  $.getJSON('/sections', function(data) {
+  	for (var i = data.length - 1; i >= 0; i--) {
+  		zones.push(data[i].location);
+  		percentages.push(Math.floor((data[i].max - data[i].capacity) / data[i].max * 100));
+  	}
+    for (var i = zones.length - 1; i >= 0; i--) {
+      var zone = new google.maps.Polygon({
+        paths: zones[i],
+        strokeColor: getColorClass(percentages[i])[1],
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: getColorClass(percentages[i])[1],
+        fillOpacity: 0.35
+      });
+      polygons.push(zone);
+      zone.setMap(map);
+    }  	
+  })
+
+}
+
+function getColorClass(percentage) {
+	
+	if (percentage > 90) {
+		return ["red accent-4", "#d50000"];
+	} else if(percentage > 80) {
+		return ["red", "#f44336"];
+	} else if(percentage > 70) {
+		return ["orange", "#ff9800"];
+	} else if(percentage > 60) {
+		return ["amber darken-3", "#ff8f00"];
+	} else if(percentage > 40) {
+		return ["yellow accent-2", "#ffff00"];
+	} else if(percentage > 20) {
+		return ["lime accent-4", "#aeea00"];
+	} else {
+		return ["light-green accent-3", "#76ff03"];
+	}
+}
+
+function loadCards() {
+  $.getJSON('/sections', function(data) {
+    var html = "";
+    for (var i = data.length - 1; i >= 0; i--) {
+      html += "<div class='col s12'>";
+      var percentage = Math.floor((data[i].max - data[i].capacity) / data[i].max * 100);
+    	html += "<div class='card "+ getColorClass(percentage)[0] +"'>";
+    	html += "<div class='card-content white-text'>";
+    	html += "<div class='card-title'>" + data[i].section.replace("P_", "Estacionamiento ") + "</div>";
+    	html += "<p>Lugares Disponibles: " + (data[i].max - (data[i].max - data[i].capacity)).toString() + "</p>";
+    	html += "<p>Ocupación: " + percentage + "%</p>";
+    	html += "</div>";
+    	html += "</div>";
+    	html += "</div>";
+      if (polygons.length > 0) {
+        polygons[i].setOptions({
+          strokeColor: getColorClass(percentage)[1],
+          fillColor: getColorClass(percentage)[1]
+        });
+      }
 		}
 		console.log('Refreshing')
 		$('#cards-container').html(html);
+	});
+	setTimeout(loadCards, 2000);
+}
+
+loadCards();
 ```
-In the next section _About Us_ we have a short description of what Parkify is as well as what our objective is, followed by all the members in the team. Also in this page, a short video is includedin which we present the way the problem parkify is trying to solve and the solution we are offering. The last section, _Documentation_, holds a list of all the available commands that can be given to the application and what each of these is for, making it easy of the user to navigate and work in a way he sees fit.
+In the next section _About Us_ we have a short description of what Parkify is as well as what our objective is, followed by all the members in the team. Also in this page, a short video is included, where we present the way the problem parkify is trying to solve, the solution that is being offered offering, and a short description of how the app works. The last section, _Documentation_, holds a list of all the available commands that can be given to the application and what each of these is for, making it easy of the user to navigate and work in a way he sees fit.
 
 ###__Model__
 _A complementar_
