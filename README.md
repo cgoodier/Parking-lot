@@ -193,8 +193,27 @@ _Green: Parking Area_ | _Yellow = Building_ | _Blue = Entrance_
 [Click here](https://github.com/iotchallenge2016/Parking-lot/blob/Algorith-desing/README.md "GitHub Repository") for the breakdown of this same algorithm.
 
 ###__The App__
-_A complementar_
+For the development of the app, we created a simple but fast design. This way the user does not wastes several time and concentration trying to read the app. The app, mainly, asks for the specific user's destination. This way the app returns the information of that area in order to show if that zone is available or not. We made this possible by extracting the information from the database and projecting the same information to the user. This is an example of how we did it:
+```java
+public View getView(int position, View convertView, ViewGroup parent) {
+        if(convertView == null){
+            convertView = activity.getLayoutInflater().inflate(R.layout.json_row, null);
+        }
 
+        TextView section = (TextView)convertView.findViewById(R.id.textView);
+        TextView lugares = (TextView)convertView.findViewById(R.id.textView2);
+        TextView per = (TextView)convertView.findViewById(R.id.textView3);
+        LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layout);
+
+        try{
+            String sec = this.json.getString("section") + "";
+            sec = sec.replace("P_", "");
+            section.setText("Estacionamiento " + sec);
+
+            lugares.setText(new Double(this.json.getString("capacity")).intValue() + "");
+
+            Integer percentage = new Double((Double.parseDouble(this.json.getString("capacity")) * 100) / Double.parseDouble(this.json.getString("max"))).intValue();
+```
 ###__The Web page__
 [Check out our Web page!](http://10.43.51.167:5000/ "Parkify Web")
 
