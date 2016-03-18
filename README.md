@@ -317,7 +317,9 @@ loadCards();
 In the next section _About Us_ we have a short description of what Parkify is as well as what our objective is, followed by all the members in the team. Also in this page, a short video is included, where we present the way the problem parkify is trying to solve, the solution that is being offered offering, and a short description of how the app works. The last section, _Documentation_, holds a list of all the available commands that can be given to the application and what each of these is for, making it easy of the user to navigate and work in a way he sees fit.
 
 ###__Model__
-_A complementar_
 
+To show how parkify works, a miniature model of a parking lot was made out of styrofoam. Here we use two different areas that are connected in the middle, each 20 spaces. An Intel Edison board was placed below the two zonees adding a button at their entrance and a touch sensor in their exit as well as an LCD screen just before their respective buttons to display the number of free spaces and change color according to them (as it was mentioned in the _Sensors_ section) and a parking gate next to the entrance and exit of the parking lot that uses a servo motor to move every five seconds.
+
+The way the model works: A car enters the parking lot and passes through the button at the entrance, decreasing the counter of the first zone. It will either stay in the first area or go to the second one according to where the algorith tells it to go; if it stays in the first area then it will just park there, otherwise it will move on to the second one passing in its way to through the touch sensor in the first exit, increasing the "free" counter in that area, an then passing through the button of the second area to change its counter respectively and park. When the car needs to exit, if its from the second area, then he just passes through the touch sensor and the gate at the exit, if it's located in the first, then it will first have to pass through the second area.
 
 
