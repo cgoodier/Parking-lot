@@ -193,7 +193,7 @@ _Green: Parking Area_ | _Yellow = Building_ | _Blue = Entrance_
 [Click here](https://github.com/iotchallenge2016/Parking-lot/blob/Algorith-desing/README.md "GitHub Repository") for the breakdown of this same algorithm.
 
 ###__The App__
-For the development of the app, we created a simple but fast design. This way the user does not wastes several time and concentration trying to read the app. The app, mainly, asks for the specific user's destination. This way the app returns the information of that area in order to show if that zone is available or not. We made this possible by extracting the information from the database and projecting the same information to the user. This is an example of how we did it:
+For the development of the app, we created a simple but fast design. This way the user does not wastes several time and concentration trying to read the app. The app, mainly, asks for the specific user's destination. This way the app returns the information of that area in order to show if that zone is available or not. We made this possible by extracting the information from the database and projecting the same information to the user. This is an example of how we did it inside file [JASONAdapter.java](https://github.com/iotchallenge2016/android_app/blob/master/app/src/main/java/com/equipo7/iot2016/JSONAdapter.java) :
 ```java
 public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
