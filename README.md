@@ -214,6 +214,10 @@ public View getView(int position, View convertView, ViewGroup parent) {
 
             Integer percentage = new Double((Double.parseDouble(this.json.getString("capacity")) * 100) / Double.parseDouble(this.json.getString("max"))).intValue();
 ```
+<p>Like previously mentioned we made it simple, so the does not gets distracted. This is because the user is driving and if the app is hard to read it could cause harm to the user. We also complemented this with colors and percentage since looking to a green image is easier for the user to know that the parking area near his destination is availabl. Open, search, quick look, go; all of this in less than 10 seconds. </p>
+
+![Ejemplo App](http://i.imgur.com/zXKYnSC.png)
+
 ###__The Web page__
 [Check out our Web page!](http://10.43.51.167:5000/ "Parkify Web")
 
@@ -339,8 +343,9 @@ function loadCards() {
 
 loadCards();
 ```
-In the next section _About Us_ we have a short description of what Parkify is as well as what our objective is, followed by all the members in the team. Also in this page, a short video is included, where we present the way the problem parkify is trying to solve, the solution that is being offered offering, and a short description of how the app works. The last section, _Documentation_, holds a list of all the available commands that can be given to the application and what each of these is for, making it easy of the user to navigate and work in a way he sees fit.
+<p>In the next section _About Us_ we have a short description of what Parkify is as well as what our objective is, followed by all the members in the team. Also in this page, a short video is included, where we present the way the problem parkify is trying to solve, the solution that is being offered offering, and a short description of how the app works. The last section, _Documentation_, holds a list of all the available commands that can be given to the application and what each of these is for, making it easy of the user to navigate and work in a way he sees fit. This is a screenshot of our webpage: </p>
 
+![ScreenshotWeb](http://i.imgur.com/T0qQJz4.png)
 ###__Model__
 
 To show how parkify works, a miniature model of a parking lot was made out of styrofoam. Here we use two different areas that are connected in the middle, each 20 spaces. An Intel Edison board was placed below the two zonees adding a button at their entrance and a touch sensor in their exit as well as an LCD screen just before their respective buttons to display the number of free spaces and change color according to them (as it was mentioned in the _Sensors_ section) and a parking gate next to the entrance and exit of the parking lot that uses a servo motor to move every five seconds.
