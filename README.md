@@ -3,6 +3,12 @@
 
 <img src="http://i.imgur.com/MKaZBnj.png" width="400"> 
 
+>"Welcome to the world of Parkify. I am Eagfy, and I will be your guide!.
+<img src="http://i.imgur.com/dwoUlWR.jpg" width="400">
+
+<p>Check out our promo video by clicking the image below!</p>
+[![Parkify Video](https://i.ytimg.com/vi/xLYKoWhppAw/hqdefault.jpg)](https://www.youtube.com/watch?v=xLYKoWhppAw "Youtube video")
+
 ### A world in constant motion
 
 We live in a world where being able to do things faster has become a necessity to the point where even five minutes can feel like an eternity. This is related with the fact that finding a parking space is more difficult everyday due to the constant increase of traffic; therefore, it makes this a tedious process, taking longer than what the world around us demands. Having no way to be able to explore an entire parking lot, one begins to lose time by small amounts a day until it becomes a tremendous total when adding those minutes in a lifetime; however, gas is also wasted in the process.
@@ -322,4 +328,4 @@ To show how parkify works, a miniature model of a parking lot was made out of st
 
 The way the model works: A car enters the parking lot and passes through the button at the entrance, decreasing the counter of the first zone. It will either stay in the first area or go to the second one according to where the algorith tells it to go; if it stays in the first area then it will just park there, otherwise it will move on to the second one passing in its way to through the touch sensor in the first exit, increasing the "free" counter in that area, an then passing through the button of the second area to change its counter respectively and park. When the car needs to exit, if its from the second area, then he just passes through the touch sensor and the gate at the exit, if it's located in the first, then it will first have to pass through the second area.
 
-
+<img src="http://i.imgur.com/fvu9Bp7.png" width="400">
