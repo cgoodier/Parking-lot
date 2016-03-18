@@ -31,7 +31,9 @@ We have implemented the use of a camera in order to be able to detect license pl
 
 [Camara Test](https://github.com/dtoledo23/development_card/blob/master/cameraTest.py "GitHub Repository")
 ### Web service
-We also included within the Intel Edison, we will be using its IP address to host a web server which will be used to display the main webpage of Parkify made utilizing a Materialize template as well as giving you the option to create your own parking space for the use of the application. The css and necessary scripts for it to run correctly can be found here as well as the server:
+We also included within the Intel Edison, we will be using its IP address to host a web server which will be used to display the main webpage of Parkify made utilizing a Materialize template as well as giving you the option to create your own parking space for the use of the application. The HTML, CSS, and necessary scripts for it to run correctly can be found here as well as the server:
+
+ [HTML](https://github.com/iotchallenge2016/development_card/tree/web-service/templates "GitHub Repository")
 
  [Init.js](https://github.com/iotchallenge2016/development_card/blob/950f8b029e6447204472b0a2a5b5659d0c9766be/static/js/init.js "GitHub Repository")
 
